@@ -1,6 +1,7 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const bodyParser = require("body-parser");
+require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 5500;
