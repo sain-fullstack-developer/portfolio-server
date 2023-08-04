@@ -2,8 +2,10 @@ const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const bodyParser = require("body-parser");
 require("dotenv").config();
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
 const port = process.env.PORT || 5500;
 
 // Creates and connects to the SQLite database
