@@ -6,7 +6,7 @@ const cors = require("cors");
 
 const app = express();
 app.use(cors());
-const port = process.env.PORT || 5500;
+const port = 5000;
 
 // Creates and connects to the SQLite database
 const db = new sqlite3.Database("./database.db", (err) => {
@@ -38,6 +38,18 @@ app.use(bodyParser.json());
 // Routes
 app.get("/api/projects", (req, res) => {
 	db.all("SELECT * FROM projects", (err, rows) => {
+		if (err) {
+			console.error(err.message);
+			res.status(500).json({ error: "Internal server error" });
+			return;
+		}
+		res.json(rows);
+	});
+});
+app.get("/api/projects/:id", (req, res) => {
+	const params = req.params.id;
+
+	db.all("SELECT * FROM projects WHERE id = ?", [params], (err, rows) => {
 		if (err) {
 			console.error(err.message);
 			res.status(500).json({ error: "Internal server error" });
